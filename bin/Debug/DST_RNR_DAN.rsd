@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>DS_ORN1</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@id_pp">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Int32</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT d.id_pp
+     , d.MeasureDate
+     , d.sVal dsVal
+     , n.sVal nsVal
+	 , case when MONTH(d.MeasureDate)&lt;6 then 'summer' else 'winter' end as season  
+  FROM id_norm_s1 d
+       JOIN id_norm_s2 n ON
+            n.id_pp = d.id_pp
+        AND n.MeasureDate = d.MeasureDate
+ WHERE d.id_pp = @id_pp</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="id_pp">
+        <DataField>id_pp</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="MeasureDate">
+        <DataField>MeasureDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="dsVal">
+        <DataField>dsVal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="nsVal">
+        <DataField>nsVal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="season">
+        <DataField>season</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
